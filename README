@@ -1,0 +1,12 @@
+This is Perl module Riak::PBC.
+
+INSTALLATION
+
+Download it, unpack it, then build it as per the usual:
+
+    % perl Makefile.PL
+    % make && make install
+
+REQUIRED
+
+    http://code.google.com/p/protobuf-perlxs/
