@@ -33,6 +33,9 @@ message RpbGetReq {
     optional bytes if_modified = 7;     // fail if the supplied vclock does not match
     optional bool head = 8;             // return everything but the value
     optional bool deletedvclock = 9;    // return the tombstone's vclock, if applicable
+    optional uint32 timeout = 10;
+    optional bool sloppy_quorum = 11;   // Experimental, may change/disappear
+    optional uint32 n_val = 12;         // Experimental, may change/disappear
 }
 
 message RpbGetResp {
@@ -53,6 +56,10 @@ message RpbPutReq {
     optional bool if_not_modified = 9;
     optional bool if_none_match = 10;
     optional bool return_head = 11;
+    optional uint32 timeout = 12;
+    optional bool asis = 13;
+    optional bool sloppy_quorum = 14;   // Experimental, may change/disappear
+    optional uint32 n_val = 15;         // Experimental, may change/disappear
 }
 
 message RpbPutResp {
@@ -71,16 +78,32 @@ message RpbDelReq {
     optional uint32 pr = 7;
     optional uint32 pw = 8;
     optional uint32 dw = 9;
+    optional uint32 timeout = 10;
+    optional bool sloppy_quorum = 11;   // Experimental, may change/disappear
+    optional uint32 n_val = 12;         // Experimental, may change/disappear
 }
 
+// List buckets request
+message RpbListBucketsReq {
+    optional uint32 timeout = 1;
+    optional bool stream = 2;
+}
+
+// List buckets response - one or more of these packets will be sent
+// the last one will have done set true (and may not have any buckets in it)
 message RpbListBucketsResp {
     repeated bytes buckets = 1;
+    optional bool done = 2;
 }
 
+// List keys in bucket request
 message RpbListKeysReq {
     required bytes bucket = 1;
+    optional uint32 timeout = 2;
 }
 
+// List keys in bucket response - one or more of these packets will be sent
+// the last one will have done set true (and may not have any keys in it)
 message RpbListKeysResp {
     repeated bytes keys = 1;
     optional bool done = 2;

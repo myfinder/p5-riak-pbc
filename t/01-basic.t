@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test::More;
 BEGIN { use_ok('Riak::PBC') };
 
 use Riak::PBC;
@@ -18,3 +18,5 @@ my $unpacked_content = Riak::PBC::RpbContent->new;
 $content = $unpacked_content->unpack($packed_content);
 
 is $unpacked_content->value, 'test values', 'pack -> unpack';
+
+done_testing;
